@@ -20,9 +20,7 @@ import com.example.jetlagged.R
 import java.time.Duration
 import java.time.LocalDateTime
 
-data class SleepGraphData(
-    val sleepDayData: List<SleepDayData>,
-) {
+data class SleepGraphData(val sleepDayData: List<SleepDayData>) {
     val earliestStartHour: Int by lazy {
         sleepDayData.minOf { it.firstSleepStart.hour }
     }
@@ -56,16 +54,13 @@ data class SleepDayData(
         }
     }
 
-    fun fractionOfTotalTime(sleepPeriod: SleepPeriod): Float {
-        return sleepPeriod.duration.toMinutes() / totalTimeInBed.toMinutes().toFloat()
-    }
+    fun fractionOfTotalTime(sleepPeriod: SleepPeriod): Float =
+        sleepPeriod.duration.toMinutes() / totalTimeInBed.toMinutes().toFloat()
 
-    fun minutesAfterSleepStart(sleepPeriod: SleepPeriod): Long {
-        return Duration.between(
-            firstSleepStart,
-            sleepPeriod.startTime
-        ).toMinutes()
-    }
+    fun minutesAfterSleepStart(sleepPeriod: SleepPeriod): Long = Duration.between(
+        firstSleepStart,
+        sleepPeriod.startTime,
+    ).toMinutes()
 }
 
 data class SleepPeriod(
@@ -83,5 +78,5 @@ enum class SleepType(val title: Int) {
     Awake(R.string.sleep_type_awake),
     REM(R.string.sleep_type_rem),
     Light(R.string.sleep_type_light),
-    Deep(R.string.sleep_type_deep)
+    Deep(R.string.sleep_type_deep),
 }

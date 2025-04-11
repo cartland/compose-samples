@@ -45,7 +45,7 @@ fun TimeGraph(
     val bars = @Composable { repeat(dayItemsCount) { TimeGraphScope.bar(it) } }
     Layout(
         contents = listOf(hoursHeader, dayLabels, bars),
-        modifier = modifier.padding(bottom = 32.dp)
+        modifier = modifier.padding(bottom = 32.dp),
     ) {
             (hoursHeaderMeasurables, dayLabelMeasurables, barMeasureables),
             constraints,
@@ -69,8 +69,8 @@ fun TimeGraph(
             val barPlaceable = measurable.measure(
                 constraints.copy(
                     minWidth = barWidth,
-                    maxWidth = barWidth
-                )
+                    maxWidth = barWidth,
+                ),
             )
             totalHeight += barPlaceable.height
             barPlaceable
@@ -117,15 +117,12 @@ object TimeGraphScope {
         return then(
             TimeGraphParentData(
                 duration = durationInHours / hours.size,
-                offset = offsetInHours / hours.size
-            )
+                offset = offsetInHours / hours.size,
+            ),
         )
     }
 }
 
-class TimeGraphParentData(
-    val duration: Float,
-    val offset: Float,
-) : ParentDataModifier {
+class TimeGraphParentData(val duration: Float, val offset: Float) : ParentDataModifier {
     override fun Density.modifyParentData(parentData: Any?) = this@TimeGraphParentData
 }

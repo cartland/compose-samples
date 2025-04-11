@@ -198,5 +198,5 @@ internal val heartRateGraphData = listOf(
     HeartRateData(LocalTime.of(23, 59), 95),
 ).sortedBy { it.date.toSecondOfDay() }
 
-const val numberEntries = 48 // 48 blocks of 30 minutes
-const val bracketInSeconds = 30 * 60 // 30 minutes time frame
+const val NUMBER_OF_ENTRIES = 48 // 48 blocks of 30 minutes
+const val BRACKET_IN_SECONDS = 30 * 60 // 30 minutes time frame

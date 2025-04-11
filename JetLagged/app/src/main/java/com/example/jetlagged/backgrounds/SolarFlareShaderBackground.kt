@@ -31,6 +31,7 @@ import kotlinx.coroutines.launch
 import org.intellij.lang.annotations.Language
 
 /**
+ *
  * Background modifier that displays a custom shader for Android T and above and a linear gradient
  * for older versions of Android
  */

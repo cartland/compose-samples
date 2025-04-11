@@ -40,10 +40,10 @@ import androidx.compose.ui.text.drawText
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toIntRect
 import androidx.compose.ui.unit.toSize
+import com.example.jetlagged.data.BRACKET_IN_SECONDS
 import com.example.jetlagged.data.HeartRateData
-import com.example.jetlagged.data.bracketInSeconds
+import com.example.jetlagged.data.NUMBER_OF_ENTRIES
 import com.example.jetlagged.data.heartRateGraphData
-import com.example.jetlagged.data.numberEntries
 import com.example.jetlagged.ui.theme.JetLaggedTheme
 import kotlin.math.roundToInt
 
@@ -52,7 +52,7 @@ fun HeartRateGraph(listData: List<HeartRateData>) {
     Box(Modifier.size(width = 400.dp, height = 100.dp)) {
         Graph(
             listData = listData,
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(16.dp),
         )
     }
 }
@@ -77,15 +77,15 @@ private fun Graph(
                     drawPath(
                         paths.second,
                         pathBackground,
-                        style = Fill
+                        style = Fill,
                     )
                     drawPath(
                         paths.first,
                         lineBrush,
-                        style = Stroke(2.dp.toPx())
+                        style = Stroke(2.dp.toPx()),
                     )
                 }
-            }
+            },
     )
 }
 
@@ -116,32 +116,35 @@ fun generateSmoothPath(data: List<HeartRateData>, size: Size): Pair<Path, Path> 
     var previousY = size.height
     var previousMaxX = 0f
     var previousMaxY = size.height
-    val groupedMeasurements = (0..numberEntries).map { bracketStart ->
+    val groupedMeasurements = (0..NUMBER_OF_ENTRIES).map { bracketStart ->
         heartRateGraphData.filter {
-            (bracketStart * bracketInSeconds..(bracketStart + 1) * bracketInSeconds)
+            (bracketStart * BRACKET_IN_SECONDS..(bracketStart + 1) * BRACKET_IN_SECONDS)
                 .contains(it.date.toSecondOfDay())
         }
     }.map { heartRates ->
-        if (heartRates.isEmpty()) DataPoint.NoMeasurement else
+        if (heartRates.isEmpty()) {
+            DataPoint.NoMeasurement
+        } else {
             DataPoint.Measurement(
                 averageMeasurementTime = heartRates.map { it.date.toSecondOfDay() }.average()
                     .roundToInt(),
                 minHeartRate = heartRates.minBy { it.amount }.amount,
                 maxHeartRate = heartRates.maxBy { it.amount }.amount,
-                averageHeartRate = heartRates.map { it.amount }.average().roundToInt()
+                averageHeartRate = heartRates.map { it.amount }.average().roundToInt(),
             )
+        }
     }
     groupedMeasurements.forEachIndexed { i, dataPoint ->
         if (i == 0 && dataPoint is DataPoint.Measurement) {
             path.moveTo(
                 0f,
                 size.height - (dataPoint.averageHeartRate - graphBottom).toFloat() *
-                    heightPxPerAmount
+                    heightPxPerAmount,
             )
             variancePath.moveTo(
                 0f,
                 size.height - (dataPoint.maxHeartRate - graphBottom).toFloat() *
-                    heightPxPerAmount
+                    heightPxPerAmount,
             )
         }
 
@@ -154,8 +157,12 @@ fun generateSmoothPath(data: List<HeartRateData>, size: Size): Pair<Path, Path> 
             val controlPoint1 = PointF((x + previousX) / 2f, previousY)
             val controlPoint2 = PointF((x + previousX) / 2f, y)
             path.cubicTo(
-                controlPoint1.x, controlPoint1.y, controlPoint2.x, controlPoint2.y,
-                x, y
+                controlPoint1.x,
+                controlPoint1.y,
+                controlPoint2.x,
+                controlPoint2.y,
+                x,
+                y,
             )
             previousX = x
             previousY = y
@@ -166,8 +173,12 @@ fun generateSmoothPath(data: List<HeartRateData>, size: Size): Pair<Path, Path> 
             val maxControlPoint1 = PointF((maxX + previousMaxX) / 2f, previousMaxY)
             val maxControlPoint2 = PointF((maxX + previousMaxX) / 2f, maxY)
             variancePath.cubicTo(
-                maxControlPoint1.x, maxControlPoint1.y, maxControlPoint2.x, maxControlPoint2.y,
-                maxX, maxY
+                maxControlPoint1.x,
+                maxControlPoint1.y,
+                maxControlPoint2.x,
+                maxControlPoint2.y,
+                maxX,
+                maxY,
             )
 
             previousMaxX = maxX
@@ -183,7 +194,7 @@ fun generateSmoothPath(data: List<HeartRateData>, size: Size): Pair<Path, Path> 
             variancePath.moveTo(
                 size.width,
                 size.height - (dataPoint.minHeartRate - graphBottom).toFloat() *
-                    heightPxPerAmount
+                    heightPxPerAmount,
             )
         }
 
@@ -194,8 +205,12 @@ fun generateSmoothPath(data: List<HeartRateData>, size: Size): Pair<Path, Path> 
             val minControlPoint1 = PointF((minX + previousMinX) / 2f, previousMinY)
             val minControlPoint2 = PointF((minX + previousMinX) / 2f, minY)
             variancePath.cubicTo(
-                minControlPoint1.x, minControlPoint1.y, minControlPoint2.x, minControlPoint2.y,
-                minX, minY
+                minControlPoint1.x,
+                minControlPoint1.y,
+                minControlPoint2.x,
+                minControlPoint2.y,
+                minX,
+                minY,
             )
 
             previousMinX = minX
@@ -209,7 +224,7 @@ fun DrawScope.drawHighlight(
     highlightedWeek: Int,
     graphData: List<HeartRateData>,
     textMeasurer: TextMeasurer,
-    labelTextStyle: TextStyle
+    labelTextStyle: TextStyle,
 ) {
     val amount = graphData[highlightedWeek].amount
     val minAmount = graphData.minBy { it.amount }.amount
@@ -223,14 +238,14 @@ fun DrawScope.drawHighlight(
         start = Offset(x, 0f),
         end = Offset(x, size.height),
         strokeWidth = 2.dp.toPx(),
-        pathEffect = PathEffect.dashPathEffect(floatArrayOf(10f, 10f))
+        pathEffect = PathEffect.dashPathEffect(floatArrayOf(10f, 10f)),
     )
 
     // draw hit circle on graph
     drawCircle(
         Color.Green,
         radius = 4.dp.toPx(),
-        center = Offset(x, pointY)
+        center = Offset(x, pointY),
     )
 
     // draw info box
@@ -242,12 +257,12 @@ fun DrawScope.drawHighlight(
         Color.White,
         topLeft = Offset(boxTopLeft, 0f),
         size = highlightContainerSize.toSize(),
-        cornerRadius = CornerRadius(8.dp.toPx())
+        cornerRadius = CornerRadius(8.dp.toPx()),
     )
     drawText(
         textLayoutResult,
         color = Color.Black,
-        topLeft = Offset(boxTopLeft + 4.dp.toPx(), 4.dp.toPx())
+        topLeft = Offset(boxTopLeft + 4.dp.toPx(), 4.dp.toPx()),
     )
 }
 

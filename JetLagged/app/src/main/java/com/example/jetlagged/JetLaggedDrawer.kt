@@ -60,9 +60,8 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun HomeScreenDrawer(windowSizeClass: WindowSizeClass) {
-
     Surface(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
     ) {
         var drawerState by remember {
             mutableStateOf(DrawerState.Closed)
@@ -109,7 +108,7 @@ fun HomeScreenDrawer(windowSizeClass: WindowSizeClass) {
                     translationX.snapTo(targetSize)
                     velocityTracker.addPosition(
                         SystemClock.uptimeMillis(),
-                        Offset(backEvent.touchX, backEvent.touchY)
+                        Offset(backEvent.touchX, backEvent.touchY),
                     )
                 }
                 closeDrawer(velocityTracker.calculateVelocity().x)
@@ -123,7 +122,7 @@ fun HomeScreenDrawer(windowSizeClass: WindowSizeClass) {
             selectedScreen = screenState,
             onScreenSelected = { screen ->
                 screenState = screen
-            }
+            },
         )
 
         val draggableState = rememberDraggableState(onDelta = { dragAmount ->
@@ -150,11 +149,12 @@ fun HomeScreenDrawer(windowSizeClass: WindowSizeClass) {
                 // This example is showing how to use draggable with custom logic on stop to snap to the edges
                 // You can also use `anchoredDraggable()` to set up anchors and not need to worry about more calculations.
                 .draggable(
-                    draggableState, Orientation.Horizontal,
+                    draggableState,
+                    Orientation.Horizontal,
                     onDragStopped = { velocity ->
                         val targetOffsetX = decay.calculateTargetValue(
                             translationX.value,
-                            velocity
+                            velocity,
                         )
                         coroutineScope.launch {
                             val actualTargetX = if (targetOffsetX > drawerWidth * 0.5) {
@@ -166,17 +166,19 @@ fun HomeScreenDrawer(windowSizeClass: WindowSizeClass) {
                             val targetDifference = (actualTargetX - targetOffsetX)
                             val canReachTargetWithDecay =
                                 (
-                                    targetOffsetX > actualTargetX && velocity > 0f &&
+                                    targetOffsetX > actualTargetX &&
+                                        velocity > 0f &&
                                         targetDifference > 0f
                                     ) ||
                                     (
-                                        targetOffsetX < actualTargetX && velocity < 0 &&
+                                        targetOffsetX < actualTargetX &&
+                                            velocity < 0 &&
                                             targetDifference < 0f
                                         )
                             if (canReachTargetWithDecay) {
                                 translationX.animateDecay(
                                     initialVelocity = velocity,
-                                    animationSpec = decay
+                                    animationSpec = decay,
                                 )
                             } else {
                                 translationX.animateTo(actualTargetX, initialVelocity = velocity)
@@ -187,8 +189,8 @@ fun HomeScreenDrawer(windowSizeClass: WindowSizeClass) {
                                 DrawerState.Closed
                             }
                         }
-                    }
-                )
+                    },
+                ),
         )
     }
 }
@@ -198,7 +200,7 @@ private fun ScreenContents(
     windowWidthSizeClass: WindowWidthSizeClass,
     selectedScreen: Screen,
     onDrawerClicked: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Box(modifier) {
         when (selectedScreen) {
@@ -206,24 +208,24 @@ private fun ScreenContents(
                 JetLaggedScreen(
                     windowSizeClass = windowWidthSizeClass,
                     modifier = Modifier,
-                    onDrawerClicked = onDrawerClicked
+                    onDrawerClicked = onDrawerClicked,
                 )
 
             Screen.SleepDetails ->
                 Surface(
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier.fillMaxSize(),
                 ) {
                 }
 
             Screen.Leaderboard ->
                 Surface(
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier.fillMaxSize(),
                 ) {
                 }
 
             Screen.Settings ->
                 Surface(
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier.fillMaxSize(),
                 ) {
                 }
         }
@@ -232,20 +234,20 @@ private fun ScreenContents(
 
 private enum class DrawerState {
     Open,
-    Closed
+    Closed,
 }
 
 @Composable
 private fun HomeScreenDrawerContents(
     selectedScreen: Screen,
     onScreenSelected: (Screen) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier
             .fillMaxSize()
             .padding(16.dp),
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
     ) {
         Screen.entries.forEach {
             NavigationDrawerItem(

@@ -41,7 +41,7 @@ enum class SleepTab(val title: Int) {
     Week(R.string.sleep_tab_week_heading),
     Month(R.string.sleep_tab_month_heading),
     SixMonths(R.string.sleep_tab_six_months_heading),
-    OneYear(R.string.sleep_tab_one_year_heading)
+    OneYear(R.string.sleep_tab_one_year_heading),
 }
 
 @Composable
@@ -62,11 +62,11 @@ fun JetLaggedHeaderTabs(
                     .padding(horizontal = 2.dp)
                     .border(
                         BorderStroke(2.dp, MaterialTheme.colorScheme.primary),
-                        RoundedCornerShape(10.dp)
-                    )
+                        RoundedCornerShape(10.dp),
+                    ),
             )
         },
-        divider = { }
+        divider = { },
     ) {
         SleepTab.entries.forEachIndexed { index, sleepTab ->
             val selected = index == selectedTab.ordinal
@@ -74,7 +74,7 @@ fun JetLaggedHeaderTabs(
                 sleepTab = sleepTab,
                 selected = selected,
                 onTabSelected = onTabSelected,
-                index = index
+                index = index,
             )
         }
     }
@@ -82,6 +82,7 @@ fun JetLaggedHeaderTabs(
 
 private val textModifier = Modifier
     .padding(vertical = 6.dp, horizontal = 4.dp)
+
 @Composable
 private fun SleepTabText(
     sleepTab: SleepTab,
@@ -98,12 +99,12 @@ private fun SleepTabText(
         selectedContentColor = MaterialTheme.colorScheme.onBackground,
         onClick = {
             onTabSelected(SleepTab.entries[index])
-        }
+        },
     ) {
         Text(
             modifier = textModifier,
             text = stringResource(id = sleepTab.title),
-            style = SmallHeadingStyle
+            style = SmallHeadingStyle,
         )
     }
 }

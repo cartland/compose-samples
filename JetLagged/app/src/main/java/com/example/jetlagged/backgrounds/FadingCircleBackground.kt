@@ -45,8 +45,8 @@ fun FadingCircleBackground(bubbleSize: Dp, color: Color) {
             1f,
             animationSpec = infiniteRepeatable(
                 animation = tween(2000, easing = EaseInOut),
-                repeatMode = RepeatMode.Reverse
-            )
+                repeatMode = RepeatMode.Reverse,
+            ),
         )
     }
     Box(
@@ -61,23 +61,26 @@ fun FadingCircleBackground(bubbleSize: Dp, color: Color) {
                 onDrawBehind {
                     repeat(ceil(numberRows).toInt()) { row ->
                         repeat(ceil(numberCols).toInt()) { col ->
-                            val offset = if (row.mod(2) == 0)
-                                (bubbleSizePx + paddingPx) / 2f else 0f
+                            val offset = if (row.mod(2) == 0) {
+                                (bubbleSizePx + paddingPx) / 2f
+                            } else {
+                                0f
+                            }
                             drawCircle(
                                 color.copy(
                                     alpha = color.alpha *
-                                        ((row) / numberRows * alphaAnimation.value)
+                                        ((row) / numberRows * alphaAnimation.value),
                                 ),
                                 radius = bubbleSizePx / 2f,
                                 center = Offset(
                                     (bubbleSizePx + paddingPx) * col + offset,
-                                    (bubbleSizePx + paddingPx) * row
-                                )
+                                    (bubbleSizePx + paddingPx) * row,
+                                ),
                             )
                         }
                     }
                 }
-            }
+            },
     )
 }
 

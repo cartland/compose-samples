@@ -33,6 +33,6 @@ object DomainDiModule {
     @Provides
     @Singleton
     fun provideEpisodePlayer(
-        @Dispatcher(JetcasterDispatchers.Main) mainDispatcher: CoroutineDispatcher
+        @Dispatcher(JetcasterDispatchers.Main) mainDispatcher: CoroutineDispatcher,
     ): EpisodePlayer = MockEpisodePlayer(mainDispatcher)
 }

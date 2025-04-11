@@ -64,7 +64,7 @@ fun LazyGridScope.podcastCategory(
         CategoryPodcasts(
             topPodcasts = podcastCategoryFilterResult.topPodcasts,
             navigateToPodcastDetails = navigateToPodcastDetails,
-            onTogglePodcastFollowed = onTogglePodcastFollowed
+            onTogglePodcastFollowed = onTogglePodcastFollowed,
         )
     }
 
@@ -75,7 +75,7 @@ fun LazyGridScope.podcastCategory(
             podcast = item.podcast,
             onClick = navigateToPlayer,
             onQueueEpisode = onQueueEpisode,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         )
     }
 }
@@ -84,13 +84,13 @@ fun LazyGridScope.podcastCategory(
 private fun CategoryPodcasts(
     topPodcasts: List<PodcastInfo>,
     navigateToPodcastDetails: (PodcastInfo) -> Unit,
-    onTogglePodcastFollowed: (PodcastInfo) -> Unit
+    onTogglePodcastFollowed: (PodcastInfo) -> Unit,
 ) {
     CategoryPodcastRow(
         podcasts = topPodcasts,
         onTogglePodcastFollowed = onTogglePodcastFollowed,
         navigateToPodcastDetails = navigateToPodcastDetails,
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
     )
 }
 
@@ -99,7 +99,7 @@ private fun CategoryPodcastRow(
     podcasts: List<PodcastInfo>,
     onTogglePodcastFollowed: (PodcastInfo) -> Unit,
     navigateToPodcastDetails: (PodcastInfo) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     LazyRow(
         modifier = modifier,
@@ -107,13 +107,13 @@ private fun CategoryPodcastRow(
             start = Keyline1,
             top = 8.dp,
             end = Keyline1,
-            bottom = 24.dp
+            bottom = 24.dp,
         ),
-        horizontalArrangement = Arrangement.spacedBy(24.dp)
+        horizontalArrangement = Arrangement.spacedBy(24.dp),
     ) {
         items(
             items = podcasts,
-            key = { it.uri }
+            key = { it.uri },
         ) { podcast ->
             TopPodcastRowItem(
                 podcastTitle = podcast.title,
@@ -124,7 +124,7 @@ private fun CategoryPodcastRow(
                     .width(128.dp)
                     .clickable {
                         navigateToPodcastDetails(podcast)
-                    }
+                    },
             )
         }
     }
@@ -139,26 +139,26 @@ private fun TopPodcastRowItem(
     onToggleFollowClicked: () -> Unit,
 ) {
     Column(
-        modifier.semantics(mergeDescendants = true) {}
+        modifier.semantics(mergeDescendants = true) {},
     ) {
         Box(
             Modifier
                 .fillMaxWidth()
                 .aspectRatio(1f)
-                .align(Alignment.CenterHorizontally)
+                .align(Alignment.CenterHorizontally),
         ) {
             PodcastImage(
                 modifier = Modifier
                     .fillMaxSize()
                     .clip(MaterialTheme.shapes.medium),
                 podcastImageUrl = podcastImageUrl,
-                contentDescription = podcastTitle
+                contentDescription = podcastTitle,
             )
 
             ToggleFollowPodcastIconButton(
                 onClick = onToggleFollowClicked,
                 isFollowed = isFollowed,
-                modifier = Modifier.align(Alignment.BottomEnd)
+                modifier = Modifier.align(Alignment.BottomEnd),
             )
         }
 
@@ -169,7 +169,7 @@ private fun TopPodcastRowItem(
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier
                 .padding(top = 8.dp)
-                .fillMaxWidth()
+                .fillMaxWidth(),
         )
     }
 }
@@ -183,7 +183,7 @@ fun PreviewEpisodeListItem() {
             podcast = PreviewPodcasts[0],
             onClick = { },
             onQueueEpisode = { },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         )
     }
 }

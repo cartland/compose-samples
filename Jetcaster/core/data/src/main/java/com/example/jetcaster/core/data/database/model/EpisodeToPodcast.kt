@@ -26,11 +26,11 @@ class EpisodeToPodcast {
     lateinit var episode: Episode
 
     @Relation(parentColumn = "podcast_uri", entityColumn = "uri")
-    lateinit var _podcasts: List<Podcast>
+    private lateinit var podcasts: List<Podcast>
 
     @get:Ignore
     val podcast: Podcast
-        get() = _podcasts[0]
+        get() = podcasts[0]
 
     /**
      * Allow consumers to destructure this class
@@ -40,9 +40,9 @@ class EpisodeToPodcast {
 
     override fun equals(other: Any?): Boolean = when {
         other === this -> true
-        other is EpisodeToPodcast -> episode == other.episode && _podcasts == other._podcasts
+        other is EpisodeToPodcast -> episode == other.episode && podcasts == other.podcasts
         else -> false
     }
 
-    override fun hashCode(): Int = Objects.hash(episode, _podcasts)
+    override fun hashCode(): Int = Objects.hash(episode, podcasts)
 }

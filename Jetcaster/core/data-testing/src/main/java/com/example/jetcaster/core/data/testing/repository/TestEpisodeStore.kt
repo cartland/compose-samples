@@ -29,10 +29,9 @@ import kotlinx.coroutines.flow.update
 class TestEpisodeStore : EpisodeStore {
 
     private val episodesFlow = MutableStateFlow<List<Episode>>(listOf())
-    override fun episodeWithUri(episodeUri: String): Flow<Episode> =
-        episodesFlow.map { episodes ->
-            episodes.first { it.uri == episodeUri }
-        }
+    override fun episodeWithUri(episodeUri: String): Flow<Episode> = episodesFlow.map { episodes ->
+        episodes.first { it.uri == episodeUri }
+    }
 
     override fun episodeAndPodcastWithUri(episodeUri: String): Flow<EpisodeToPodcast> =
         episodesFlow.map { episodes ->
@@ -58,23 +57,20 @@ class TestEpisodeStore : EpisodeStore {
 
     override fun episodesInPodcasts(
         podcastUris: List<String>,
-        limit: Int
-    ): Flow<List<EpisodeToPodcast>> =
-        episodesFlow.map { episodes ->
-            episodes.filter {
-                podcastUris.contains(it.podcastUri)
-            }.map { ep ->
-                EpisodeToPodcast().apply {
-                    episode = ep
-                }
+        limit: Int,
+    ): Flow<List<EpisodeToPodcast>> = episodesFlow.map { episodes ->
+        episodes.filter {
+            podcastUris.contains(it.podcastUri)
+        }.map { ep ->
+            EpisodeToPodcast().apply {
+                episode = ep
             }
         }
+    }
 
-    override suspend fun addEpisodes(episodes: Collection<Episode>) =
-        episodesFlow.update {
-            it + episodes
-        }
+    override suspend fun addEpisodes(episodes: Collection<Episode>) = episodesFlow.update {
+        it + episodes
+    }
 
-    override suspend fun isEmpty(): Boolean =
-        episodesFlow.first().isEmpty()
+    override suspend fun isEmpty(): Boolean = episodesFlow.first().isEmpty()
 }

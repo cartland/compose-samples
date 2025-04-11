@@ -32,9 +32,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 
-class MockEpisodePlayer(
-    private val mainDispatcher: CoroutineDispatcher
-) : EpisodePlayer {
+class MockEpisodePlayer(private val mainDispatcher: CoroutineDispatcher) : EpisodePlayer {
 
     private val _playerState = MutableStateFlow(EpisodePlayerState())
     private val _currentEpisode = MutableStateFlow<PlayerEpisode?>(null)
@@ -54,14 +52,14 @@ class MockEpisodePlayer(
                 queue,
                 isPlaying,
                 timeElapsed,
-                _playerSpeed
+                _playerSpeed,
             ) { currentEpisode, queue, isPlaying, timeElapsed, playerSpeed ->
                 EpisodePlayerState(
                     currentEpisode = currentEpisode,
                     queue = queue,
                     isPlaying = isPlaying,
                     timeElapsed = timeElapsed,
-                    playbackSpeed = playerSpeed
+                    playbackSpeed = playerSpeed,
                 )
             }.catch {
                 // TODO handle error state
@@ -212,16 +210,14 @@ class MockEpisodePlayer(
         timerJob = null
     }
 
-    private fun hasNext(): Boolean {
-        return queue.value.isNotEmpty()
-    }
+    private fun hasNext(): Boolean = queue.value.isNotEmpty()
 }
 
 // Used to enable property delegation
 private operator fun <T> MutableStateFlow<T>.setValue(
     thisObj: Any?,
     property: KProperty<*>,
-    value: T
+    value: T,
 ) {
     this.value = value
 }

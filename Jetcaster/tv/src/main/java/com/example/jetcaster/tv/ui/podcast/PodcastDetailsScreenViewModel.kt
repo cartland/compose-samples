@@ -76,7 +76,7 @@ class PodcastDetailsScreenViewModel @Inject constructor(
     val uiStateFlow = combine(
         podcastFlow,
         episodeListFlow,
-        subscribedPodcastListFlow
+        subscribedPodcastListFlow,
     ) { podcast, episodeList, subscribedPodcastList ->
         if (podcast != null) {
             val isSubscribed = subscribedPodcastList.any { it.podcast.uri == podcastUri }
@@ -87,7 +87,7 @@ class PodcastDetailsScreenViewModel @Inject constructor(
     }.stateIn(
         viewModelScope,
         SharingStarted.WhileSubscribed(5_000),
-        PodcastScreenUiState.Loading
+        PodcastScreenUiState.Loading,
     )
 
     fun subscribe(podcastInfo: PodcastInfo, isSubscribed: Boolean) {
@@ -121,6 +121,6 @@ sealed interface PodcastScreenUiState {
     data class Ready(
         val podcastInfo: PodcastInfo,
         val episodeList: EpisodeList,
-        val isSubscribed: Boolean
+        val isSubscribed: Boolean,
     ) : PodcastScreenUiState
 }

@@ -27,9 +27,7 @@ import kotlinx.coroutines.flow.map
 /**
  * Use case for categories that can be used to filter podcasts.
  */
-class FilterableCategoriesUseCase @Inject constructor(
-    private val categoryStore: CategoryStore
-) {
+class FilterableCategoriesUseCase @Inject constructor(private val categoryStore: CategoryStore) {
     /**
      * Created a [FilterableCategoriesModel] from the list of categories in [categoryStore].
      * @param selectedCategory the currently selected category. If null, the first category
@@ -42,7 +40,7 @@ class FilterableCategoriesUseCase @Inject constructor(
                 FilterableCategoriesModel(
                     categories = categories.map { it.asExternalModel() },
                     selectedCategory = selectedCategory
-                        ?: categories.firstOrNull()?.asExternalModel()
+                        ?: categories.firstOrNull()?.asExternalModel(),
                 )
             }
 }

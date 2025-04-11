@@ -24,9 +24,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.jetcaster.core.player.model.PlayerEpisode
 import kotlinx.coroutines.flow.map
 
-class JetcasterAppState(
-    val navHostController: NavHostController
-) {
+class JetcasterAppState(val navHostController: NavHostController) {
 
     val currentRouteFlow = navHostController.currentBackStackEntryFlow.map {
         it.destination.route
@@ -83,9 +81,7 @@ class JetcasterAppState(
 }
 
 @Composable
-fun rememberJetcasterAppState(
-    navHostController: NavHostController = rememberNavController()
-) =
+fun rememberJetcasterAppState(navHostController: NavHostController = rememberNavController()) =
     remember(navHostController) {
         JetcasterAppState(navHostController)
     }

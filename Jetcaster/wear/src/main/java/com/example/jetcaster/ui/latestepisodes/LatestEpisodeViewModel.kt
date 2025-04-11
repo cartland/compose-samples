@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.jetcaster.ui.latest_episodes
+package com.example.jetcaster.ui.latestepisodes
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -41,7 +41,7 @@ class LatestEpisodeViewModel @Inject constructor(
                 LatestEpisodeScreenState.Loaded(
                     episodeToPodcastList.map {
                         it.toPlayerEpisode()
-                    }
+                    },
                 )
             } else {
                 LatestEpisodeScreenState.Empty
@@ -67,9 +67,7 @@ sealed interface LatestEpisodeScreenState {
 
     data object Loading : LatestEpisodeScreenState
 
-    data class Loaded(
-        val episodeList: List<PlayerEpisode>
-    ) : LatestEpisodeScreenState
+    data class Loaded(val episodeList: List<PlayerEpisode>) : LatestEpisodeScreenState
 
     data object Empty : LatestEpisodeScreenState
 }

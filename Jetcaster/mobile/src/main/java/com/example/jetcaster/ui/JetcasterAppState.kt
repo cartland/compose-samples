@@ -57,15 +57,12 @@ sealed class Screen(val route: String) {
 @Composable
 fun rememberJetcasterAppState(
     navController: NavHostController = rememberNavController(),
-    context: Context = LocalContext.current
+    context: Context = LocalContext.current,
 ) = remember(navController, context) {
     JetcasterAppState(navController, context)
 }
 
-class JetcasterAppState(
-    val navController: NavHostController,
-    private val context: Context
-) {
+class JetcasterAppState(val navController: NavHostController, private val context: Context) {
     var isOnline by mutableStateOf(checkIfOnline())
         private set
 

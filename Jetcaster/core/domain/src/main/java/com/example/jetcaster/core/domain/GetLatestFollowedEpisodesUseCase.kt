@@ -37,7 +37,7 @@ class GetLatestFollowedEpisodesUseCase @Inject constructor(
             .flatMapLatest { followedPodcasts ->
                 episodeStore.episodesInPodcasts(
                     followedPodcasts.map { it.podcast.uri },
-                    followedPodcasts.size * 5
+                    followedPodcasts.size * 5,
                 )
             }
 }

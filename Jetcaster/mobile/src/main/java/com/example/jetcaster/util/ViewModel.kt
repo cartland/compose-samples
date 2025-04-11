@@ -29,7 +29,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
  * exception is thrown.
  */
 inline fun <reified VM : ViewModel> viewModelProviderFactoryOf(
-    crossinline create: () -> VM
+    crossinline create: () -> VM,
 ): ViewModelProvider.Factory = viewModelFactory {
     initializer {
         create()

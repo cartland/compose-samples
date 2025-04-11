@@ -39,19 +39,18 @@ class TestCategoryStore : CategoryStore {
     private val episodesFromPodcasts =
         MutableStateFlow<Map<Long, List<EpisodeToPodcast>>>(emptyMap())
 
-    override fun categoriesSortedByPodcastCount(limit: Int): Flow<List<Category>> =
-        categoryFlow
+    override fun categoriesSortedByPodcastCount(limit: Int): Flow<List<Category>> = categoryFlow
 
     override fun podcastsInCategorySortedByPodcastCount(
         categoryId: Long,
-        limit: Int
+        limit: Int,
     ): Flow<List<PodcastWithExtraInfo>> = podcastsInCategoryFlow.map {
         it[categoryId]?.take(limit) ?: emptyList()
     }
 
     override fun episodesFromPodcastsInCategory(
         categoryId: Long,
-        limit: Int
+        limit: Int,
     ): Flow<List<EpisodeToPodcast>> = episodesFromPodcasts.map {
         it[categoryId]?.take(limit) ?: emptyList()
     }

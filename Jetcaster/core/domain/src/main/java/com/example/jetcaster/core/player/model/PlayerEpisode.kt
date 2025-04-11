@@ -45,19 +45,18 @@ data class PlayerEpisode(
         author = episodeInfo.author,
         summary = episodeInfo.summary,
         podcastImageUrl = podcastInfo.imageUrl,
-        uri = episodeInfo.uri
+        uri = episodeInfo.uri,
     )
 }
 
-fun EpisodeToPodcast.toPlayerEpisode(): PlayerEpisode =
-    PlayerEpisode(
-        uri = episode.uri,
-        title = episode.title,
-        subTitle = episode.subtitle ?: "",
-        published = episode.published,
-        duration = episode.duration,
-        podcastName = podcast.title,
-        author = episode.author ?: podcast.author ?: "",
-        summary = episode.summary ?: "",
-        podcastImageUrl = podcast.imageUrl ?: "",
-    )
+fun EpisodeToPodcast.toPlayerEpisode(): PlayerEpisode = PlayerEpisode(
+    uri = episode.uri,
+    title = episode.title,
+    subTitle = episode.subtitle ?: "",
+    published = episode.published,
+    duration = episode.duration,
+    podcastName = podcast.title,
+    author = episode.author ?: podcast.author ?: "",
+    summary = episode.summary ?: "",
+    podcastImageUrl = podcast.imageUrl ?: "",
+)

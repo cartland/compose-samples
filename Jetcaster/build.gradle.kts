@@ -32,7 +32,6 @@ apply("${project.rootDir}/buildscripts/toml-updater-config.gradle")
 subprojects {
     apply(plugin = "com.diffplug.spotless")
     configure<com.diffplug.gradle.spotless.SpotlessExtension> {
-        ratchetFrom = "origin/main"
         kotlin {
             target("**/*.kt")
             targetExclude("**/build/**/*.kt")
@@ -40,7 +39,9 @@ subprojects {
                 mapOf(
                     "ktlint_code_style" to "android_studio",
                     "ij_kotlin_allow_trailing_comma" to true,
+                    "ij_kotlin_allow_trailing_comma_on_call_site" to true,
                     "ktlint_function_naming_ignore_when_annotated_with" to "Composable",
+                    "ktlint_standard_multiline-expression-wrapping" to "disabled",
                     // These rules were introduced in ktlint 0.46.0 and should not be
                     // enabled without further discussion. They are disabled for now.
                     // See: https://github.com/pinterest/ktlint/releases/tag/0.46.0
@@ -60,6 +61,10 @@ subprojects {
                             "unary-op-spacing"
                 )
             )
+            suppressLintsFor {
+                step = "ktlint"
+                shortCode = "standard:property-naming"
+            }
             licenseHeaderFile(rootProject.file("spotless/copyright.kt"))
         }
         format("kts") {

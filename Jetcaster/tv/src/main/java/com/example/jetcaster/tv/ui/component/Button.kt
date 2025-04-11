@@ -42,20 +42,16 @@ internal fun PlayButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     scale: ButtonScale = ButtonDefaults.scale(),
-) =
-    ButtonWithIcon(
-        icon = Icons.Outlined.PlayArrow,
-        label = stringResource(R.string.label_play),
-        onClick = onClick,
-        modifier = modifier,
-        scale = scale
-    )
+) = ButtonWithIcon(
+    icon = Icons.Outlined.PlayArrow,
+    label = stringResource(R.string.label_play),
+    onClick = onClick,
+    modifier = modifier,
+    scale = scale,
+)
 
 @Composable
-internal fun EnqueueButton(
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
+internal fun EnqueueButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
     IconButton(onClick = onClick, modifier = modifier) {
         Icon(
             Icons.AutoMirrored.Filled.PlaylistAdd,
@@ -65,10 +61,7 @@ internal fun EnqueueButton(
 }
 
 @Composable
-internal fun InfoButton(
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
+internal fun InfoButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
     IconButton(onClick = onClick, modifier = modifier) {
         Icon(
             Icons.Outlined.Info,
@@ -78,27 +71,21 @@ internal fun InfoButton(
 }
 
 @Composable
-internal fun PreviousButton(
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
+internal fun PreviousButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
     IconButton(onClick = onClick, modifier = modifier) {
         Icon(
             Icons.Default.SkipPrevious,
-            contentDescription = stringResource(R.string.label_previous_episode)
+            contentDescription = stringResource(R.string.label_previous_episode),
         )
     }
 }
 
 @Composable
-internal fun NextButton(
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
+internal fun NextButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
     IconButton(onClick = onClick, modifier = modifier) {
         Icon(
             Icons.Default.SkipNext,
-            contentDescription = stringResource(R.string.label_next_episode)
+            contentDescription = stringResource(R.string.label_next_episode),
         )
     }
 }
@@ -107,7 +94,7 @@ internal fun NextButton(
 internal fun PlayPauseButton(
     isPlaying: Boolean,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val (icon, description) = if (isPlaying) {
         Icons.Default.Pause to stringResource(R.string.label_pause)
@@ -120,27 +107,21 @@ internal fun PlayPauseButton(
 }
 
 @Composable
-internal fun RewindButton(
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
+internal fun RewindButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
     IconButton(onClick = onClick, modifier = modifier) {
         Icon(
             Icons.Default.Replay10,
-            contentDescription = stringResource(R.string.label_rewind)
+            contentDescription = stringResource(R.string.label_rewind),
         )
     }
 }
 
 @Composable
-internal fun SkipButton(
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
+internal fun SkipButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
     IconButton(onClick = onClick, modifier = modifier) {
         Icon(
             Icons.Default.Forward10,
-            contentDescription = stringResource(R.string.label_skip)
+            contentDescription = stringResource(R.string.label_skip),
         )
     }
 }

@@ -33,13 +33,12 @@ data class EpisodeInfo(
     val duration: Duration? = null,
 )
 
-fun Episode.asExternalModel(): EpisodeInfo =
-    EpisodeInfo(
-        uri = uri,
-        title = title,
-        subTitle = subtitle ?: "",
-        summary = summary ?: "",
-        author = author ?: "",
-        published = published,
-        duration = duration,
-    )
+fun Episode.asExternalModel(): EpisodeInfo = EpisodeInfo(
+    uri = uri,
+    title = title,
+    subTitle = subtitle ?: "",
+    summary = summary ?: "",
+    author = author ?: "",
+    published = published,
+    duration = duration,
+)

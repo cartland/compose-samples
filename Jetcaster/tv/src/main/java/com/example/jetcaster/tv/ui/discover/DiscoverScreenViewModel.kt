@@ -47,7 +47,7 @@ class DiscoverScreenViewModel @Inject constructor(
     private val episodePlayer: EpisodePlayer,
 ) : ViewModel() {
 
-    private val _selectedCategory = MutableStateFlow<CategoryInfo?>(null)
+    private val selectedCategory = MutableStateFlow<CategoryInfo?>(null)
 
     private val categoryListFlow = categoryStore
         .categoriesSortedByPodcastCount()
@@ -55,14 +55,14 @@ class DiscoverScreenViewModel @Inject constructor(
             categoryList.map { category ->
                 CategoryInfo(
                     id = category.id,
-                    name = category.name.filter { !it.isWhitespace() }
+                    name = category.name.filter { !it.isWhitespace() },
                 )
             }
         }
 
     private val selectedCategoryFlow = combine(
         categoryListFlow,
-        _selectedCategory
+        selectedCategory,
     ) { categoryList, category ->
         category ?: categoryList.firstOrNull()
     }
@@ -100,7 +100,7 @@ class DiscoverScreenViewModel @Inject constructor(
                 CategoryInfoList(categoryList),
                 category,
                 podcastList,
-                latestEpisodes
+                latestEpisodes,
             )
         } else {
             DiscoverScreenUiState.Loading
@@ -108,7 +108,7 @@ class DiscoverScreenViewModel @Inject constructor(
     }.stateIn(
         viewModelScope,
         SharingStarted.WhileSubscribed(5_000),
-        DiscoverScreenUiState.Loading
+        DiscoverScreenUiState.Loading,
     )
 
     init {
@@ -116,7 +116,7 @@ class DiscoverScreenViewModel @Inject constructor(
     }
 
     fun selectCategory(category: CategoryInfo) {
-        _selectedCategory.value = category
+        selectedCategory.value = category
     }
 
     fun play(playerEpisode: PlayerEpisode) {

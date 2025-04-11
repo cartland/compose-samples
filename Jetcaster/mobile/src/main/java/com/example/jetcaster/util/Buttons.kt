@@ -40,14 +40,14 @@ import com.example.jetcaster.R
 fun ToggleFollowPodcastIconButton(
     isFollowed: Boolean,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val clickLabel = stringResource(if (isFollowed) R.string.cd_unfollow else R.string.cd_follow)
     IconButton(
         onClick = onClick,
         modifier = modifier.semantics {
             onClick(label = clickLabel, action = null)
-        }
+        },
     ) {
         Icon(
             // TODO: think about animating these icons
@@ -63,23 +63,23 @@ fun ToggleFollowPodcastIconButton(
                 when {
                     isFollowed -> MaterialTheme.colorScheme.onPrimary
                     else -> MaterialTheme.colorScheme.primary
-                }
+                },
             ).value,
             modifier = Modifier
                 .shadow(
                     elevation = animateDpAsState(if (isFollowed) 0.dp else 1.dp).value,
-                    shape = MaterialTheme.shapes.small
+                    shape = MaterialTheme.shapes.small,
                 )
                 .background(
                     color = animateColorAsState(
                         when {
                             isFollowed -> MaterialTheme.colorScheme.primary
                             else -> MaterialTheme.colorScheme.surfaceContainerHighest
-                        }
+                        },
                     ).value,
-                    shape = CircleShape
+                    shape = CircleShape,
                 )
-                .padding(4.dp)
+                .padding(4.dp),
         )
     }
 }

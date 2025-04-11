@@ -63,10 +63,12 @@ internal fun Seekbar(
                     val end = start.copy(x = size.width)
 
                     val knobCenter = start.copy(
-                        x = timeElapsed.seconds.toFloat() / length.seconds.toFloat() * size.width
+                        x = timeElapsed.seconds.toFloat() / length.seconds.toFloat() * size.width,
                     )
                     drawLine(
-                        brush, start, end,
+                        brush,
+                        start,
+                        end,
                     )
                     if (isFocused) {
                         val outlineColor = color.copy(alpha = 0.6f)
@@ -91,6 +93,6 @@ internal fun Seekbar(
 
                     else -> false
                 }
-            }
+            },
     )
 }

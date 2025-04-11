@@ -60,7 +60,7 @@ import com.google.android.horologist.media.ui.screens.entity.EntityScreen
     onEpisodeItemClick: (PlayerEpisode) -> Unit,
     onDismiss: () -> Unit,
     modifier: Modifier = Modifier,
-    podcastDetailsViewModel: PodcastDetailsViewModel = hiltViewModel()
+    podcastDetailsViewModel: PodcastDetailsViewModel = hiltViewModel(),
 ) {
     val uiState by podcastDetailsViewModel.uiState.collectAsStateWithLifecycle()
 
@@ -82,24 +82,24 @@ fun PodcastDetailsScreen(
     modifier: Modifier = Modifier,
     onEpisodeItemClick: (PlayerEpisode) -> Unit,
     onPlayEpisode: (List<PlayerEpisode>) -> Unit,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
 ) {
     val columnState = rememberResponsiveColumnState(
         contentPadding = padding(
             first = ScalingLazyColumnDefaults.ItemType.Text,
-            last = ScalingLazyColumnDefaults.ItemType.Chip
-        )
+            last = ScalingLazyColumnDefaults.ItemType.Chip,
+        ),
     )
     ScreenScaffold(
         scrollState = columnState,
-        modifier = modifier
+        modifier = modifier,
     ) {
         when (uiState) {
             is PodcastDetailsScreenState.Loaded -> {
                 EntityScreen(
                     headerContent = {
                         ResponsiveListHeader(
-                            contentPadding = ListHeaderDefaults.firstItemPadding()
+                            contentPadding = ListHeaderDefaults.firstItemPadding(),
                         ) {
                             Text(text = uiState.podcast.title)
                         }
@@ -108,7 +108,7 @@ fun PodcastDetailsScreen(
                         ButtonsContent(
                             episodes = uiState.episodeList,
                             onPlayButtonClick = onPlayButtonClick,
-                            onPlayEpisode = onPlayEpisode
+                            onPlayEpisode = onPlayEpisode,
                         )
                     },
                     content = {
@@ -119,10 +119,10 @@ fun PodcastDetailsScreen(
                                     image = Icons.Default.MusicNote,
                                     tintColor = Color.Blue,
                                 ),
-                                onEpisodeItemClick
+                                onEpisodeItemClick,
                             )
                         }
-                    }
+                    },
                 )
             }
 
@@ -130,14 +130,14 @@ fun PodcastDetailsScreen(
                 AlertDialog(
                     showDialog = true,
                     onDismiss = { onDismiss },
-                    message = stringResource(R.string.podcasts_no_episode_podcasts)
+                    message = stringResource(R.string.podcasts_no_episode_podcasts),
                 )
             }
             PodcastDetailsScreenState.Loading -> {
                 EntityScreen(
                     headerContent = {
                         ResponsiveListHeader(
-                            contentPadding = ListHeaderDefaults.firstItemPadding()
+                            contentPadding = ListHeaderDefaults.firstItemPadding(),
                         ) {
                             Text(text = stringResource(id = R.string.loading))
                         }
@@ -146,14 +146,14 @@ fun PodcastDetailsScreen(
                         ButtonsContent(
                             episodes = emptyList(),
                             onPlayButtonClick = { },
-                            onPlayEpisode = { }
+                            onPlayEpisode = { },
                         )
                     },
                     content = {
                         items(count = 2) {
                             PlaceholderChip(colors = ChipDefaults.secondaryChipColors())
                         }
-                    }
+                    },
                 )
             }
         }
@@ -167,7 +167,6 @@ fun ButtonsContent(
     onPlayButtonClick: () -> Unit,
     onPlayEpisode: (List<PlayerEpisode>) -> Unit,
 ) {
-
     Chip(
         label = stringResource(id = R.string.button_play_content_description),
         onClick = {
@@ -184,10 +183,8 @@ sealed class PodcastDetailsScreenState {
 
     data object Loading : PodcastDetailsScreenState()
 
-    data class Loaded(
-        val episodeList: List<PlayerEpisode>,
-        val podcast: PodcastInfo,
-    ) : PodcastDetailsScreenState()
+    data class Loaded(val episodeList: List<PlayerEpisode>, val podcast: PodcastInfo) :
+        PodcastDetailsScreenState()
 
     data object Empty : PodcastDetailsScreenState()
 }
@@ -197,17 +194,17 @@ sealed class PodcastDetailsScreenState {
 @Composable
 fun PodcastDetailsScreenLoadedPreview(
     @PreviewParameter(WearPreviewEpisodes::class)
-    episode: PlayerEpisode
+    episode: PlayerEpisode,
 ) {
     PodcastDetailsScreen(
         uiState = PodcastDetailsScreenState.Loaded(
             episodeList = listOf(episode),
-            podcast = PreviewPodcastEpisodes.first().podcast
+            podcast = PreviewPodcastEpisodes.first().podcast,
         ),
         onPlayButtonClick = { },
         onEpisodeItemClick = {},
         onPlayEpisode = {},
-        onDismiss = {}
+        onDismiss = {},
     )
 }
 
@@ -216,13 +213,13 @@ fun PodcastDetailsScreenLoadedPreview(
 @Composable
 fun PodcastDetailsScreenLoadingPreview(
     @PreviewParameter(WearPreviewEpisodes::class)
-    episode: PlayerEpisode
+    episode: PlayerEpisode,
 ) {
     PodcastDetailsScreen(
         uiState = PodcastDetailsScreenState.Loading,
         onPlayButtonClick = { },
         onEpisodeItemClick = {},
         onPlayEpisode = {},
-        onDismiss = {}
+        onDismiss = {},
     )
 }

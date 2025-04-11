@@ -22,15 +22,23 @@ plugins {
     alias(libs.plugins.compose)
 }
 
-
 android {
-    compileSdk = libs.versions.compileSdk.get().toInt()
+    compileSdk =
+        libs.versions.compileSdk
+            .get()
+            .toInt()
     namespace = "com.example.jetcaster"
 
     defaultConfig {
         applicationId = "com.example.jetcaster"
-        minSdk = libs.versions.minSdk.get().toInt()
-        targetSdk = libs.versions.targetSdk.get().toInt()
+        minSdk =
+            libs.versions.minSdk
+                .get()
+                .toInt()
+        targetSdk =
+            libs.versions.targetSdk
+                .get()
+                .toInt()
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -52,7 +60,6 @@ android {
 
     buildTypes {
         getByName("debug") {
-
         }
 
         getByName("release") {
@@ -60,7 +67,7 @@ android {
             signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }

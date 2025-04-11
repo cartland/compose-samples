@@ -68,7 +68,7 @@ class HomeViewModel @Inject constructor(
     private val homeCategories = MutableStateFlow(HomeCategory.entries)
 
     // Holds our currently selected category
-    private val _selectedCategory = MutableStateFlow<CategoryInfo?>(null)
+    private val selectedCategory = MutableStateFlow<CategoryInfo?>(null)
 
     // Holds our view state which the UI collects via [state]
     private val _state = MutableStateFlow(HomeScreenUiState())
@@ -91,27 +91,29 @@ class HomeViewModel @Inject constructor(
                 selectedHomeCategory,
                 subscribedPodcasts,
                 refreshing,
-                _selectedCategory.flatMapLatest { selectedCategory ->
+                selectedCategory.flatMapLatest { selectedCategory ->
                     filterableCategoriesUseCase(selectedCategory)
                 },
-                _selectedCategory.flatMapLatest {
+                selectedCategory.flatMapLatest {
                     podcastCategoryFilterUseCase(it)
                 },
                 subscribedPodcasts.flatMapLatest { podcasts ->
                     episodeStore.episodesInPodcasts(
                         podcastUris = podcasts.map { it.podcast.uri },
-                        limit = 20
+                        limit = 20,
                     )
-                }
-            ) { homeCategories,
-                homeCategory,
-                podcasts,
-                refreshing,
-                filterableCategories,
-                podcastCategoryFilterResult,
-                libraryEpisodes ->
+                },
+            ) {
+                    homeCategories,
+                    homeCategory,
+                    podcasts,
+                    refreshing,
+                    filterableCategories,
+                    podcastCategoryFilterResult,
+                    libraryEpisodes,
+                ->
 
-                _selectedCategory.value = filterableCategories.selectedCategory
+                selectedCategory.value = filterableCategories.selectedCategory
 
                 // Override selected home category to show 'DISCOVER' if there are no
                 // featured podcasts
@@ -125,14 +127,14 @@ class HomeViewModel @Inject constructor(
                     featuredPodcasts = podcasts.map { it.asExternalModel() }.toPersistentList(),
                     filterableCategoriesModel = filterableCategories,
                     podcastCategoryFilterResult = podcastCategoryFilterResult,
-                    library = libraryEpisodes.asLibrary()
+                    library = libraryEpisodes.asLibrary(),
                 )
             }.catch { throwable ->
                 emit(
                     HomeScreenUiState(
                         isLoading = false,
-                        errorMessage = throwable.message
-                    )
+                        errorMessage = throwable.message,
+                    ),
                 )
             }.collect {
                 _state.value = it
@@ -166,7 +168,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun onCategorySelected(category: CategoryInfo) {
-        _selectedCategory.value = category
+        selectedCategory.value = category
     }
 
     private fun onHomeCategorySelected(category: HomeCategory) {
@@ -194,13 +196,13 @@ class HomeViewModel @Inject constructor(
     }
 }
 
-private fun List<EpisodeToPodcast>.asLibrary(): LibraryInfo =
-    LibraryInfo(
-        episodes = this.map { it.asPodcastToEpisodeInfo() }
-    )
+private fun List<EpisodeToPodcast>.asLibrary(): LibraryInfo = LibraryInfo(
+    episodes = this.map { it.asPodcastToEpisodeInfo() },
+)
 
 enum class HomeCategory {
-    Library, Discover
+    Library,
+    Discover,
 }
 
 @Immutable

@@ -48,13 +48,12 @@ class HomeScreenTests {
         val snackbarHostState = SnackbarHostState()
         composeTestRule.setContent {
             JetnewsTheme {
-
                 // When the Home screen receives data with an error
                 HomeFeedScreen(
                     uiState = HomeUiState.NoPosts(
                         isLoading = false,
                         errorMessages = listOf(ErrorMessage(0L, R.string.load_error)),
-                        searchInput = ""
+                        searchInput = "",
                     ),
                     showTopAppBar = false,
                     onToggleFavorite = {},
@@ -64,7 +63,7 @@ class HomeScreenTests {
                     openDrawer = {},
                     homeListLazyListState = rememberLazyListState(),
                     snackbarHostState = snackbarHostState,
-                    onSearchInputChanged = {}
+                    onSearchInputChanged = {},
                 )
             }
         }

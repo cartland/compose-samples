@@ -88,12 +88,12 @@ class JetnewsGlanceAppWidget : GlanceAppWidget() {
                     GlanceTheme.colors
                 } else {
                     JetnewsGlanceColorScheme.colors
-                }
+                },
             ) {
                 JetnewsContent(
                     posts = recommendedTopPosts,
                     bookmarks = bookmarks,
-                    onToggleBookmark = { scope.launch { postsRepository.toggleFavorite(it) } }
+                    onToggleBookmark = { scope.launch { postsRepository.toggleFavorite(it) } },
                 )
             }
         }
@@ -103,12 +103,12 @@ class JetnewsGlanceAppWidget : GlanceAppWidget() {
     private fun JetnewsContent(
         posts: List<Post>,
         bookmarks: Set<String>?,
-        onToggleBookmark: (String) -> Unit
+        onToggleBookmark: (String) -> Unit,
     ) {
         Column(
             modifier = GlanceModifier
                 .background(GlanceTheme.colors.surface)
-                .cornerRadius(24.dp)
+                .cornerRadius(24.dp),
         ) {
             Header(modifier = GlanceModifier.fillMaxWidth())
             // Set key for each size so that the onToggleBookmark lambda is called only once for the
@@ -118,7 +118,7 @@ class JetnewsGlanceAppWidget : GlanceAppWidget() {
                     modifier = GlanceModifier.fillMaxWidth(),
                     posts = posts,
                     bookmarks = bookmarks ?: setOf(),
-                    onToggleBookmark = onToggleBookmark
+                    onToggleBookmark = onToggleBookmark,
                 )
             }
         }
@@ -129,20 +129,20 @@ class JetnewsGlanceAppWidget : GlanceAppWidget() {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = modifier.padding(horizontal = 10.dp, vertical = 20.dp)
+            modifier = modifier.padding(horizontal = 10.dp, vertical = 20.dp),
         ) {
             val context = LocalContext.current
             Image(
                 provider = ImageProvider(R.drawable.ic_jetnews_logo),
                 colorFilter = ColorFilter.tint(GlanceTheme.colors.primary),
                 contentDescription = null,
-                modifier = GlanceModifier.size(24.dp)
+                modifier = GlanceModifier.size(24.dp),
             )
             Spacer(modifier = GlanceModifier.width(8.dp))
             Image(
                 contentDescription = context.getString(R.string.app_name),
                 colorFilter = ColorFilter.tint(GlanceTheme.colors.onSurfaceVariant),
-                provider = ImageProvider(R.drawable.ic_jetnews_wordmark)
+                provider = ImageProvider(R.drawable.ic_jetnews_wordmark),
             )
         }
     }

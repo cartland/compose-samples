@@ -51,12 +51,10 @@ import com.example.jetnews.ui.MainActivity
 
 enum class PostLayout { HORIZONTAL_SMALL, HORIZONTAL_LARGE, VERTICAL }
 
-fun DpSize.toPostLayout(): PostLayout {
-    return when {
-        (this.width <= 300.dp) -> PostLayout.VERTICAL
-        (this.width <= 700.dp) -> PostLayout.HORIZONTAL_SMALL
-        else -> PostLayout.HORIZONTAL_LARGE
-    }
+fun DpSize.toPostLayout(): PostLayout = when {
+    (this.width <= 300.dp) -> PostLayout.VERTICAL
+    (this.width <= 700.dp) -> PostLayout.HORIZONTAL_SMALL
+    else -> PostLayout.HORIZONTAL_LARGE
 }
 
 private fun Context.authorReadTimeString(author: String, readTimeMinutes: Int) =
@@ -70,8 +68,8 @@ private fun openPostDetails(context: Context, post: Post): Action {
             Intent.ACTION_VIEW,
             "$JETNEWS_APP_URI/home?postId=${post.id}".toUri(),
             context,
-            MainActivity::class.java
-        )
+            MainActivity::class.java,
+        ),
     )
 }
 
@@ -96,7 +94,7 @@ fun Post(
             bookmarks = bookmarks,
             onToggleBookmark = onToggleBookmark,
             modifier = modifier,
-            showImageThumbnail = false
+            showImageThumbnail = false,
         )
 
         PostLayout.VERTICAL -> VerticalPost(
@@ -114,38 +112,38 @@ fun HorizontalPost(
     bookmarks: Set<String>,
     onToggleBookmark: (String) -> Unit,
     modifier: GlanceModifier,
-    showImageThumbnail: Boolean = true
+    showImageThumbnail: Boolean = true,
 ) {
     val context = LocalContext.current
     Row(
         verticalAlignment = Alignment.Vertical.CenterVertically,
-        modifier = modifier.clickable(onClick = openPostDetails(context, post))
+        modifier = modifier.clickable(onClick = openPostDetails(context, post)),
     ) {
         if (showImageThumbnail) {
             PostImage(
                 imageId = post.imageThumbId,
                 contentScale = ContentScale.Fit,
-                modifier = GlanceModifier.size(80.dp)
+                modifier = GlanceModifier.size(80.dp),
             )
         } else {
             PostImage(
                 imageId = post.imageId,
                 contentScale = ContentScale.Crop,
-                modifier = GlanceModifier.width(250.dp)
+                modifier = GlanceModifier.width(250.dp),
             )
         }
         PostDescription(
             title = post.title,
             metadata = context.authorReadTimeString(
                 author = post.metadata.author.name,
-                readTimeMinutes = post.metadata.readTimeMinutes
+                readTimeMinutes = post.metadata.readTimeMinutes,
             ),
-            modifier = GlanceModifier.defaultWeight().padding(horizontal = 20.dp)
+            modifier = GlanceModifier.defaultWeight().padding(horizontal = 20.dp),
         )
         BookmarkButton(
             id = post.id,
             isBookmarked = bookmarks.contains(post.id),
-            onToggleBookmark = onToggleBookmark
+            onToggleBookmark = onToggleBookmark,
         )
     }
 }
@@ -160,7 +158,7 @@ fun VerticalPost(
     val context = LocalContext.current
     Column(
         verticalAlignment = Alignment.Vertical.CenterVertically,
-        modifier = modifier.clickable(onClick = openPostDetails(context, post))
+        modifier = modifier.clickable(onClick = openPostDetails(context, post)),
     ) {
         PostImage(imageId = post.imageId, modifier = GlanceModifier.fillMaxWidth())
         Spacer(modifier = GlanceModifier.height(4.dp))
@@ -169,15 +167,15 @@ fun VerticalPost(
                 title = post.title,
                 metadata = context.authorReadTimeString(
                     author = post.metadata.author.name,
-                    readTimeMinutes = post.metadata.readTimeMinutes
+                    readTimeMinutes = post.metadata.readTimeMinutes,
                 ),
-                modifier = GlanceModifier.defaultWeight()
+                modifier = GlanceModifier.defaultWeight(),
             )
             Spacer(modifier = GlanceModifier.width(10.dp))
             BookmarkButton(
                 id = post.id,
                 isBookmarked = bookmarks.contains(post.id),
-                onToggleBookmark = onToggleBookmark
+                onToggleBookmark = onToggleBookmark,
             )
         }
     }
@@ -191,11 +189,11 @@ fun BookmarkButton(id: String, isBookmarked: Boolean, onToggleBookmark: (String)
                 R.drawable.ic_jetnews_bookmark_filled
             } else {
                 R.drawable.ic_jetnews_bookmark
-            }
+            },
         ),
         colorFilter = ColorFilter.tint(GlanceTheme.colors.primary),
         contentDescription = "${if (isBookmarked) R.string.unbookmark else R.string.bookmark}",
-        modifier = GlanceModifier.clickable { onToggleBookmark(id) }
+        modifier = GlanceModifier.clickable { onToggleBookmark(id) },
     )
 }
 
@@ -203,13 +201,13 @@ fun BookmarkButton(id: String, isBookmarked: Boolean, onToggleBookmark: (String)
 fun PostImage(
     imageId: Int,
     contentScale: ContentScale = ContentScale.Crop,
-    modifier: GlanceModifier = GlanceModifier
+    modifier: GlanceModifier = GlanceModifier,
 ) {
     Image(
         provider = ImageProvider(imageId),
         contentScale = contentScale,
         contentDescription = null,
-        modifier = modifier.cornerRadius(5.dp)
+        modifier = modifier.cornerRadius(5.dp),
     )
 }
 
@@ -220,13 +218,13 @@ fun PostDescription(title: String, metadata: String, modifier: GlanceModifier) {
             text = title,
             maxLines = 3,
             style = JetnewsGlanceTextStyles.bodyLarge
-                .copy(color = GlanceTheme.colors.onBackground)
+                .copy(color = GlanceTheme.colors.onBackground),
         )
         Spacer(modifier = GlanceModifier.height(4.dp))
         Text(
             text = metadata,
             style = JetnewsGlanceTextStyles.bodySmall
-                .copy(color = GlanceTheme.colors.onBackground)
+                .copy(color = GlanceTheme.colors.onBackground),
         )
     }
 }

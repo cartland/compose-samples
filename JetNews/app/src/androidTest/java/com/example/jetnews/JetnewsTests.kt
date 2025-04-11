@@ -55,7 +55,6 @@ class JetnewsTests {
 
     @Test
     fun app_opensArticle() {
-
         println(composeTestRule.onRoot().printToString())
         composeTestRule.onAllNodes(hasText(manuel.name, substring = true))[0].performClick()
 
@@ -72,7 +71,7 @@ class JetnewsTests {
     fun app_opensInterests() {
         composeTestRule.onNodeWithContentDescription(
             label = "Open navigation drawer",
-            useUnmergedTree = true
+            useUnmergedTree = true,
         ).performClick()
         composeTestRule.onNodeWithText("Interests").performClick()
         composeTestRule.waitUntilAtLeastOneExists(hasText("Topics"), 5000L)

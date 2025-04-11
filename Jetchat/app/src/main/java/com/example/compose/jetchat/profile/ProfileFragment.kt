@@ -66,7 +66,7 @@ class ProfileFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         val rootView: View = inflater.inflate(R.layout.fragment_profile, container, false)
 
@@ -94,9 +94,9 @@ class ProfileFragment : Fragment() {
                                     })
                                     .padding(horizontal = 12.dp, vertical = 16.dp)
                                     .height(24.dp),
-                                contentDescription = stringResource(id = R.string.more_options)
+                                contentDescription = stringResource(id = R.string.more_options),
                             )
-                        }
+                        },
                     )
                 }
             }
@@ -113,7 +113,7 @@ class ProfileFragment : Fragment() {
                     } else {
                         ProfileScreen(
                             userData = userData!!,
-                            nestedScrollInteropConnection = nestedScrollInteropConnection
+                            nestedScrollInteropConnection = nestedScrollInteropConnection,
                         )
                     }
                 }

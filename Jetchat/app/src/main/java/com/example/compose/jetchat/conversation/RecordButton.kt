@@ -65,26 +65,29 @@ fun RecordButton(
     onStartRecording: () -> Boolean,
     onFinishRecording: () -> Unit,
     onCancelRecording: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val transition = updateTransition(targetState = recording, label = "record")
     val scale = transition.animateFloat(
         transitionSpec = { spring(Spring.DampingRatioMediumBouncy, Spring.StiffnessLow) },
         label = "record-scale",
-        targetValueByState = { rec -> if (rec) 2f else 1f }
+        targetValueByState = { rec -> if (rec) 2f else 1f },
     )
     val containerAlpha = transition.animateFloat(
         transitionSpec = { tween(2000) },
         label = "record-scale",
-        targetValueByState = { rec -> if (rec) 1f else 0f }
+        targetValueByState = { rec -> if (rec) 1f else 0f },
     )
     val iconColor = transition.animateColor(
         transitionSpec = { tween(200) },
         label = "record-scale",
         targetValueByState = { rec ->
-            if (rec) contentColorFor(LocalContentColor.current)
-            else LocalContentColor.current
-        }
+            if (rec) {
+                contentColorFor(LocalContentColor.current)
+            } else {
+                LocalContentColor.current
+            }
+        },
     )
 
     Box {
@@ -95,10 +98,11 @@ fun RecordButton(
                 .aspectRatio(1f)
                 .graphicsLayer {
                     alpha = containerAlpha.value
-                    scaleX = scale.value; scaleY = scale.value
+                    scaleX = scale.value
+                    scaleY = scale.value
                 }
                 .clip(CircleShape)
-                .background(LocalContentColor.current)
+                .background(LocalContentColor.current),
         )
         val scope = rememberCoroutineScope()
         val tooltipState = remember { TooltipState() }
@@ -110,7 +114,7 @@ fun RecordButton(
                 }
             },
             enableUserInput = false,
-            state = tooltipState
+            state = tooltipState,
         ) {
             Icon(
                 Icons.Default.Mic,
@@ -127,7 +131,7 @@ fun RecordButton(
                         onStartRecording = onStartRecording,
                         onFinishRecording = onFinishRecording,
                         onCancelRecording = onCancelRecording,
-                    )
+                    ),
             )
         }
     }
@@ -181,6 +185,6 @@ private fun Modifier.voiceRecordingGesture(
                         dragging = false
                     }
                 }
-            }
+            },
         )
     }

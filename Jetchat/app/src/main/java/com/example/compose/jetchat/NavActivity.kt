@@ -93,18 +93,17 @@ class NavActivity : AppCompatActivity() {
                                 drawerState.close()
                             }
                             selectedMenu = it
-                        }
+                        },
                     ) {
                         AndroidViewBinding(ContentMainBinding::inflate)
                     }
                 }
-            }
+            },
         )
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        return findNavController().navigateUp() || super.onSupportNavigateUp()
-    }
+    override fun onSupportNavigateUp(): Boolean =
+        findNavController().navigateUp() || super.onSupportNavigateUp()
 
     /**
      * See https://issuetracker.google.com/142847973

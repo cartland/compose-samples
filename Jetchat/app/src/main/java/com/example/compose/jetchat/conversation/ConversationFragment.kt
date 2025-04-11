@@ -39,7 +39,7 @@ class ConversationFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View = ComposeView(inflater.context).apply {
         layoutParams = LayoutParams(MATCH_PARENT, MATCH_PARENT)
 
@@ -52,12 +52,12 @@ class ConversationFragment : Fragment() {
                         val bundle = bundleOf("userId" to user)
                         findNavController().navigate(
                             R.id.nav_profile,
-                            bundle
+                            bundle,
                         )
                     },
                     onNavIconPressed = {
                         activityViewModel.openDrawer()
-                    }
+                    },
                 )
             }
         }

@@ -67,24 +67,28 @@ fun ReplyEmailListItem(
             .clip(CardDefaults.shape)
             .combinedClickable(
                 onClick = { navigateToDetail(email.id) },
-                onLongClick = { toggleSelection(email.id) }
+                onLongClick = { toggleSelection(email.id) },
             )
             .clip(CardDefaults.shape),
         colors = CardDefaults.cardColors(
-            containerColor = if (isSelected) MaterialTheme.colorScheme.primaryContainer
-            else if (isOpened) MaterialTheme.colorScheme.secondaryContainer
-            else MaterialTheme.colorScheme.surfaceVariant
-        )
+            containerColor = if (isSelected) {
+                MaterialTheme.colorScheme.primaryContainer
+            } else if (isOpened) {
+                MaterialTheme.colorScheme.secondaryContainer
+            } else {
+                MaterialTheme.colorScheme.surfaceVariant
+            },
+        ),
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(20.dp)
+                .padding(20.dp),
         ) {
             Row(modifier = Modifier.fillMaxWidth()) {
                 val clickModifier = Modifier.clickable(
                     interactionSource = remember { MutableInteractionSource() },
-                    indication = null
+                    indication = null,
                 ) { toggleSelection(email.id) }
                 AnimatedContent(targetState = isSelected, label = "avatar") { selected ->
                     if (selected) {
@@ -93,7 +97,7 @@ fun ReplyEmailListItem(
                         ReplyProfileImage(
                             email.sender.avatar,
                             email.sender.fullName,
-                            clickModifier
+                            clickModifier,
                         )
                     }
                 }
@@ -102,11 +106,11 @@ fun ReplyEmailListItem(
                     modifier = Modifier
                         .weight(1f)
                         .padding(horizontal = 12.dp, vertical = 4.dp),
-                    verticalArrangement = Arrangement.Center
+                    verticalArrangement = Arrangement.Center,
                 ) {
                     Text(
                         text = email.sender.firstName,
-                        style = MaterialTheme.typography.labelMedium
+                        style = MaterialTheme.typography.labelMedium,
                     )
                     Text(
                         text = email.createdAt,
@@ -117,12 +121,12 @@ fun ReplyEmailListItem(
                     onClick = { /*TODO*/ },
                     modifier = Modifier
                         .clip(CircleShape)
-                        .background(MaterialTheme.colorScheme.surfaceContainerHigh)
+                        .background(MaterialTheme.colorScheme.surfaceContainerHigh),
                 ) {
                     Icon(
                         imageVector = Icons.Default.StarBorder,
                         contentDescription = "Favorite",
-                        tint = MaterialTheme.colorScheme.outline
+                        tint = MaterialTheme.colorScheme.outline,
                     )
                 }
             }
@@ -136,7 +140,7 @@ fun ReplyEmailListItem(
                 text = email.body,
                 style = MaterialTheme.typography.bodyMedium,
                 maxLines = 2,
-                overflow = TextOverflow.Ellipsis
+                overflow = TextOverflow.Ellipsis,
             )
         }
     }
@@ -148,7 +152,7 @@ fun SelectedProfileImage(modifier: Modifier = Modifier) {
         modifier
             .size(40.dp)
             .clip(CircleShape)
-            .background(MaterialTheme.colorScheme.primary)
+            .background(MaterialTheme.colorScheme.primary),
     ) {
         Icon(
             Icons.Default.Check,
@@ -156,7 +160,7 @@ fun SelectedProfileImage(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .size(24.dp)
                 .align(Alignment.Center),
-            tint = MaterialTheme.colorScheme.onPrimary
+            tint = MaterialTheme.colorScheme.onPrimary,
         )
     }
 }

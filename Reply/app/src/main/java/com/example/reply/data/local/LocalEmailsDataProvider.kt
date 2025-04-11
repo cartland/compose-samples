@@ -57,7 +57,7 @@ object LocalEmailsDataProvider {
             "Raspberry Pie: We should make this pie recipe tonight! The filling is " +
                 "very quick to put together.",
             createdAt = "2 hours ago",
-            mailbox = MailboxType.SENT
+            mailbox = MailboxType.SENT,
         ),
         Email(
             id = 7L,
@@ -78,7 +78,7 @@ object LocalEmailsDataProvider {
             Wanted to email and see what you thought of
             """.trimIndent(),
             createdAt = "3 hours ago",
-            mailbox = MailboxType.DRAFTS
+            mailbox = MailboxType.DRAFTS,
         ),
         Email(
             id = 1L,
@@ -106,7 +106,7 @@ object LocalEmailsDataProvider {
                 EmailAttachment(R.drawable.paris_1, "Bridge in Paris"),
                 EmailAttachment(R.drawable.paris_2, "Bridge in Paris at night"),
                 EmailAttachment(R.drawable.paris_3, "City street in Paris"),
-                EmailAttachment(R.drawable.paris_4, "Street with bike in Paris")
+                EmailAttachment(R.drawable.paris_4, "Street with bike in Paris"),
             ),
             isImportant = true,
             createdAt = "1 hour ago",
@@ -157,7 +157,7 @@ object LocalEmailsDataProvider {
                 EmailAttachment(R.drawable.paris_1, "Bridge in Paris"),
                 EmailAttachment(R.drawable.paris_2, "Bridge in Paris at night"),
                 EmailAttachment(R.drawable.paris_3, "City street in Paris"),
-                EmailAttachment(R.drawable.paris_4, "Street with bike in Paris")
+                EmailAttachment(R.drawable.paris_4, "Street with bike in Paris"),
             ),
             true,
             createdAt = "1 hour ago",
@@ -185,7 +185,7 @@ object LocalEmailsDataProvider {
             recipients = listOf(
                 LocalAccountsDataProvider.getDefaultUserAccount(),
                 LocalAccountsDataProvider.getContactAccountByUid(8L),
-                LocalAccountsDataProvider.getContactAccountByUid(5L)
+                LocalAccountsDataProvider.getContactAccountByUid(5L),
             ),
             subject = "Brazil trip",
             body = """
@@ -206,7 +206,7 @@ object LocalEmailsDataProvider {
             subject = "Update to Your Itinerary",
             body = "",
             createdAt = "2 hours ago",
-            threads = threads.shuffled()
+            threads = threads.shuffled(),
         ),
         Email(
             id = 6L,
@@ -217,7 +217,7 @@ object LocalEmailsDataProvider {
                 "very quick to put together.",
             createdAt = "2 hours ago",
             mailbox = MailboxType.SENT,
-            threads = threads.shuffled()
+            threads = threads.shuffled(),
         ),
         Email(
             id = 7L,
@@ -226,7 +226,7 @@ object LocalEmailsDataProvider {
             subject = "Delivered",
             body = "Your shoes should be waiting for you at home!",
             createdAt = "2 hours ago",
-            threads = threads.shuffled()
+            threads = threads.shuffled(),
         ),
         Email(
             id = 8L,
@@ -281,28 +281,24 @@ object LocalEmailsDataProvider {
             createdAt = "3 hours ago",
             mailbox = MailboxType.SPAM,
             threads = threads.shuffled(),
-        )
+        ),
     )
 
     /**
      * Get an [Email] with the given [id].
      */
-    fun get(id: Long): Email? {
-        return allEmails.firstOrNull { it.id == id }
-    }
+    fun get(id: Long): Email? = allEmails.firstOrNull { it.id == id }
 
     /**
      * Create a new, blank [Email].
      */
-    fun create(): Email {
-        return Email(
-            System.nanoTime(), // Unique ID generation.
-            LocalAccountsDataProvider.getDefaultUserAccount(),
-            createdAt = "Just now",
-            subject = "Monthly hosting party",
-            body = "I would like to invite everyone to our monthly event hosting party"
-        )
-    }
+    fun create(): Email = Email(
+        System.nanoTime(), // Unique ID generation.
+        LocalAccountsDataProvider.getDefaultUserAccount(),
+        createdAt = "Just now",
+        subject = "Monthly hosting party",
+        body = "I would like to invite everyone to our monthly event hosting party",
+    )
 
     /**
      * Create a new [Email] that is a reply to the email with the given [replyToId].
@@ -318,7 +314,7 @@ object LocalEmailsDataProvider {
             isStarred = replyTo.isStarred,
             isImportant = replyTo.isImportant,
             createdAt = "Just now",
-            body = "Responding to the above conversation."
+            body = "Responding to the above conversation.",
         )
     }
 
@@ -331,6 +327,6 @@ object LocalEmailsDataProvider {
         "Taxes",
         "Vacation",
         "Mortgage",
-        "Grocery coupons"
+        "Grocery coupons",
     )
 }

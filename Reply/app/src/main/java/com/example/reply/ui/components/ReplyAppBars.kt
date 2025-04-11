@@ -60,7 +60,7 @@ import com.example.reply.data.Email
 fun ReplyDockedSearchBar(
     emails: List<Email>,
     onSearchItemSelected: (Email) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     var query by remember { mutableStateOf("") }
     var expanded by remember { mutableStateOf(false) }
@@ -76,13 +76,14 @@ fun ReplyDockedSearchBar(
                 emails.filter {
                     it.subject.startsWith(
                         prefix = query,
-                        ignoreCase = true
-                    ) || it.sender.fullName.startsWith(
-                        prefix =
-                        query,
-                        ignoreCase = true
-                    )
-                }
+                        ignoreCase = true,
+                    ) ||
+                        it.sender.fullName.startsWith(
+                            prefix =
+                            query,
+                            ignoreCase = true,
+                        )
+                },
             )
         }
     }
@@ -125,7 +126,7 @@ fun ReplyDockedSearchBar(
                         description = stringResource(id = R.string.profile),
                         modifier = Modifier
                             .padding(12.dp)
-                            .size(32.dp)
+                            .size(32.dp),
                     )
                 },
             )
@@ -138,7 +139,7 @@ fun ReplyDockedSearchBar(
                 LazyColumn(
                     modifier = Modifier.fillMaxWidth(),
                     contentPadding = PaddingValues(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                    verticalArrangement = Arrangement.spacedBy(4.dp),
                 ) {
                     items(items = searchResults, key = { it.id }) { email ->
                         ListItem(
@@ -149,28 +150,29 @@ fun ReplyDockedSearchBar(
                                     drawableResource = email.sender.avatar,
                                     description = stringResource(id = R.string.profile),
                                     modifier = Modifier
-                                        .size(32.dp)
+                                        .size(32.dp),
                                 )
                             },
                             modifier = Modifier.clickable {
                                 onSearchItemSelected.invoke(email)
                                 query = ""
                                 expanded = false
-                            }
+                            },
                         )
                     }
                 }
             } else if (query.isNotEmpty()) {
                 Text(
                     text = stringResource(id = R.string.no_item_found),
-                    modifier = Modifier.padding(16.dp)
+                    modifier = Modifier.padding(16.dp),
                 )
-            } else
+            } else {
                 Text(
                     text = stringResource(id = R.string.no_search_history),
-                    modifier = Modifier.padding(16.dp)
+                    modifier = Modifier.padding(16.dp),
                 )
-        }
+            }
+        },
     )
 }
 
@@ -180,29 +182,32 @@ fun EmailDetailAppBar(
     email: Email,
     isFullScreen: Boolean,
     modifier: Modifier = Modifier,
-    onBackPressed: () -> Unit
+    onBackPressed: () -> Unit,
 ) {
     TopAppBar(
         modifier = modifier,
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.inverseOnSurface
+            containerColor = MaterialTheme.colorScheme.inverseOnSurface,
         ),
         title = {
             Column(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = if (isFullScreen) Alignment.CenterHorizontally
-                else Alignment.Start
+                horizontalAlignment = if (isFullScreen) {
+                    Alignment.CenterHorizontally
+                } else {
+                    Alignment.Start
+                },
             ) {
                 Text(
                     text = email.subject,
                     style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 Text(
                     modifier = Modifier.padding(top = 4.dp),
                     text = "${email.threads.size} ${stringResource(id = R.string.messages)}",
                     style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.outline
+                    color = MaterialTheme.colorScheme.outline,
                 )
             }
         },
@@ -213,13 +218,13 @@ fun EmailDetailAppBar(
                     modifier = Modifier.padding(8.dp),
                     colors = IconButtonDefaults.filledIconButtonColors(
                         containerColor = MaterialTheme.colorScheme.surface,
-                        contentColor = MaterialTheme.colorScheme.onSurface
-                    )
+                        contentColor = MaterialTheme.colorScheme.onSurface,
+                    ),
                 ) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = stringResource(id = R.string.back_button),
-                        modifier = Modifier.size(14.dp)
+                        modifier = Modifier.size(14.dp),
                     )
                 }
             }
@@ -231,9 +236,9 @@ fun EmailDetailAppBar(
                 Icon(
                     imageVector = Icons.Default.MoreVert,
                     contentDescription = stringResource(id = R.string.more_options_button),
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
-        }
+        },
     )
 }

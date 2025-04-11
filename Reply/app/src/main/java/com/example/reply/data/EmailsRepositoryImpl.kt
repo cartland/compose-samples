@@ -31,9 +31,7 @@ class EmailsRepositoryImpl : EmailsRepository {
         emit(categoryEmails)
     }
 
-    override fun getAllFolders(): List<String> {
-        return LocalEmailsDataProvider.getAllFolders()
-    }
+    override fun getAllFolders(): List<String> = LocalEmailsDataProvider.getAllFolders()
 
     override fun getEmailFromId(id: Long): Flow<Email?> = flow {
         val categoryEmails = LocalEmailsDataProvider.allEmails.firstOrNull { it.id == id }

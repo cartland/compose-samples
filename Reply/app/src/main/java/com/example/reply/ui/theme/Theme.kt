@@ -262,12 +262,10 @@ private val highContrastDarkColorScheme = darkColorScheme(
     surfaceContainerHighest = surfaceContainerHighestDarkHighContrast,
 )
 
-fun isContrastAvailable(): Boolean {
-    return Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE
-}
+fun isContrastAvailable(): Boolean = Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE
 
 @Composable
-fun selectSchemeForContrast(isDark: Boolean,): ColorScheme {
+fun selectSchemeForContrast(isDark: Boolean): ColorScheme {
     val context = LocalContext.current
     var colorScheme = if (isDark) darkScheme else lightScheme
     val isPreview = LocalInspectionMode.current
@@ -277,26 +275,40 @@ fun selectSchemeForContrast(isDark: Boolean,): ColorScheme {
         val contrastLevel = uiModeManager.contrast
 
         colorScheme = when (contrastLevel) {
-            in 0.0f..0.33f -> if (isDark)
-                darkScheme else lightScheme
+            in 0.0f..0.33f -> if (isDark) {
+                darkScheme
+            } else {
+                lightScheme
+            }
 
-            in 0.34f..0.66f -> if (isDark)
-                mediumContrastDarkColorScheme else mediumContrastLightColorScheme
+            in 0.34f..0.66f -> if (isDark) {
+                mediumContrastDarkColorScheme
+            } else {
+                mediumContrastLightColorScheme
+            }
 
-            in 0.67f..1.0f -> if (isDark)
-                highContrastDarkColorScheme else highContrastLightColorScheme
+            in 0.67f..1.0f -> if (isDark) {
+                highContrastDarkColorScheme
+            } else {
+                highContrastLightColorScheme
+            }
 
             else -> if (isDark) darkScheme else lightScheme
         }
         return colorScheme
-    } else return colorScheme
+    } else {
+        return colorScheme
+    }
 }
+
 @Composable
 fun ContrastAwareReplyTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = false,
-    content: @Composable() () -> Unit
+    content:
+    @Composable()
+    () -> Unit,
 ) {
     val replyColorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
@@ -319,6 +331,6 @@ fun ContrastAwareReplyTheme(
         colorScheme = replyColorScheme,
         typography = replyTypography,
         shapes = shapes,
-        content = content
+        content = content,
     )
 }

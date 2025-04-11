@@ -48,7 +48,7 @@ fun JetsnackSurface(
     contentColor: Color = JetsnackTheme.colors.textSecondary,
     border: BorderStroke? = null,
     elevation: Dp = 0.dp,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     Box(
         modifier = modifier
@@ -57,17 +57,17 @@ fun JetsnackSurface(
             .then(if (border != null) Modifier.border(border, shape) else Modifier)
             .background(
                 color = getBackgroundColorForElevation(color, elevation),
-                shape = shape
+                shape = shape,
             )
-            .clip(shape)
+            .clip(shape),
     ) {
         CompositionLocalProvider(LocalContentColor provides contentColor, content = content)
     }
 }
 
 @Composable
-private fun getBackgroundColorForElevation(color: Color, elevation: Dp): Color {
-    return if (elevation > 0.dp // && https://issuetracker.google.com/issues/161429530
+private fun getBackgroundColorForElevation(color: Color, elevation: Dp): Color =
+    if (elevation > 0.dp // && https://issuetracker.google.com/issues/161429530
         // JetsnackTheme.colors.isDark //&&
         // color == JetsnackTheme.colors.uiBackground
     ) {
@@ -75,7 +75,6 @@ private fun getBackgroundColorForElevation(color: Color, elevation: Dp): Color {
     } else {
         color
     }
-}
 
 /**
  * Applies a [Color.White] overlay to this color based on the [elevation]. This increases visibility

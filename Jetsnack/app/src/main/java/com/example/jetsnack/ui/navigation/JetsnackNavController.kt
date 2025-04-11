@@ -41,7 +41,7 @@ object MainDestinations {
  */
 @Composable
 fun rememberJetsnackNavController(
-    navController: NavHostController = rememberNavController()
+    navController: NavHostController = rememberNavController(),
 ): JetsnackNavController = remember(navController) {
     JetsnackNavController(navController)
 }
@@ -50,9 +50,7 @@ fun rememberJetsnackNavController(
  * Responsible for holding UI Navigation logic.
  */
 @Stable
-class JetsnackNavController(
-    val navController: NavHostController,
-) {
+class JetsnackNavController(val navController: NavHostController) {
 
     // ----------------------------------------------------------
     // Navigation state source of truth
@@ -100,6 +98,5 @@ private val NavGraph.startDestination: NavDestination?
  *
  * https://cs.android.com/androidx/platform/frameworks/support/+/androidx-main:navigation/navigation-ui/src/main/java/androidx/navigation/ui/NavigationUI.kt
  */
-private tailrec fun findStartDestination(graph: NavDestination): NavDestination {
-    return if (graph is NavGraph) findStartDestination(graph.startDestination!!) else graph
-}
+private tailrec fun findStartDestination(graph: NavDestination): NavDestination =
+    if (graph is NavGraph) findStartDestination(graph.startDestination!!) else graph

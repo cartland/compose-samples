@@ -46,7 +46,7 @@ fun QuantitySelector(
     count: Int,
     decreaseItemCount: () -> Unit,
     increaseItemCount: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Row(modifier = modifier) {
         Text(
@@ -56,18 +56,18 @@ fun QuantitySelector(
             fontWeight = FontWeight.Normal,
             modifier = Modifier
                 .padding(end = 18.dp)
-                .align(Alignment.CenterVertically)
+                .align(Alignment.CenterVertically),
         )
         JetsnackGradientTintedIconButton(
             imageVector = Icons.Default.Remove,
             onClick = decreaseItemCount,
             contentDescription = stringResource(R.string.label_decrease),
-            modifier = Modifier.align(Alignment.CenterVertically)
+            modifier = Modifier.align(Alignment.CenterVertically),
         )
         Crossfade(
             targetState = count,
             modifier = Modifier
-                .align(Alignment.CenterVertically)
+                .align(Alignment.CenterVertically),
         ) {
             Text(
                 text = "$it",
@@ -75,14 +75,14 @@ fun QuantitySelector(
                 fontSize = 18.sp,
                 color = JetsnackTheme.colors.textPrimary,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.widthIn(min = 24.dp)
+                modifier = Modifier.widthIn(min = 24.dp),
             )
         }
         JetsnackGradientTintedIconButton(
             imageVector = Icons.Default.Add,
             onClick = increaseItemCount,
             contentDescription = stringResource(R.string.label_increase),
-            modifier = Modifier.align(Alignment.CenterVertically)
+            modifier = Modifier.align(Alignment.CenterVertically),
         )
     }
 }

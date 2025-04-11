@@ -41,7 +41,7 @@ import com.example.jetsnack.ui.theme.JetsnackTheme
 @Composable
 fun SearchSuggestions(
     suggestions: List<SearchSuggestionGroup>,
-    onSuggestionSelect: (String) -> Unit
+    onSuggestionSelect: (String) -> Unit,
 ) {
     LazyColumn {
         suggestions.forEach { suggestionGroup ->
@@ -52,7 +52,7 @@ fun SearchSuggestions(
                 Suggestion(
                     suggestion = suggestion,
                     onSuggestionSelect = onSuggestionSelect,
-                    modifier = Modifier.fillParentMaxWidth()
+                    modifier = Modifier.fillParentMaxWidth(),
                 )
             }
             item {
@@ -63,10 +63,7 @@ fun SearchSuggestions(
 }
 
 @Composable
-private fun SuggestionHeader(
-    name: String,
-    modifier: Modifier = Modifier
-) {
+private fun SuggestionHeader(name: String, modifier: Modifier = Modifier) {
     Text(
         text = name,
         style = MaterialTheme.typography.titleLarge,
@@ -74,7 +71,7 @@ private fun SuggestionHeader(
         modifier = modifier
             .heightIn(min = 56.dp)
             .padding(horizontal = 24.dp, vertical = 4.dp)
-            .wrapContentHeight()
+            .wrapContentHeight(),
     )
 }
 
@@ -82,7 +79,7 @@ private fun SuggestionHeader(
 private fun Suggestion(
     suggestion: String,
     onSuggestionSelect: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Text(
         text = suggestion,
@@ -91,7 +88,7 @@ private fun Suggestion(
             .heightIn(min = 48.dp)
             .clickable { onSuggestionSelect(suggestion) }
             .padding(start = 24.dp)
-            .wrapContentSize(Alignment.CenterStart)
+            .wrapContentSize(Alignment.CenterStart),
     )
 }
 
@@ -104,7 +101,7 @@ fun PreviewSuggestions() {
         JetsnackSurface {
             SearchSuggestions(
                 suggestions = SearchRepo.getSuggestions(),
-                onSuggestionSelect = { }
+                onSuggestionSelect = { },
             )
         }
     }
